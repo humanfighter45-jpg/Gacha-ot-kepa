@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#160e25">
+<title>Гача от Кэпа</title>
+<style>
+:root{--bg:#120c1c;--panel:#21152d;--panel2:#2b1a38;--gold:#f4c56b;--gold2:#a86d2a;--purple:#8c4cff;--text:#fff1d2;--muted:#c5b2d1;--line:#694a72}
+*{box-sizing:border-box}body{margin:0;color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 50% -10%,#53316c 0,#21142f 35%,var(--bg) 75%);min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer}
+.wrap{width:min(100%,980px);margin:auto;padding:16px 14px 38px}
+header{display:flex;align-items:center;gap:13px;margin:8px 0 18px}
+.brandmark{width:65px;height:65px;flex:0 0 65px;border:2px solid var(--gold);border-radius:18px;background:linear-gradient(145deg,#56317c,#21142f);display:grid;place-items:center;font-size:39px;box-shadow:0 0 22px #8b4aff45}
+h1{font-family:Georgia,serif;color:var(--gold);font-size:clamp(25px,6vw,39px);line-height:1.05;margin:0;text-shadow:0 2px #4a2a17}
+.subtitle{color:var(--muted);font-size:13px;margin-top:5px}
+.topstats{margin-left:auto;text-align:right;background:#140d1dcc;border:1px solid var(--line);padding:10px 12px;border-radius:14px;min-width:100px}
+.topstats small{display:block;color:var(--muted);font-size:11px}.topstats strong{font-size:22px;color:var(--gold)}
+.panel{background:linear-gradient(145deg,#30203b,#1d1328);border:1px solid var(--line);border-radius:18px;padding:17px;margin:13px 0;box-shadow:0 10px 28px #0003}
+.panel h2{font-family:Georgia,serif;font-size:21px;color:var(--gold);margin:0 0 13px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+input{width:100%;border-radius:11px;border:1px solid #755781;background:#140d1e;color:white;padding:12px;outline:none;min-width:0}
+input:focus{border-color:var(--gold);box-shadow:0 0 0 2px #f4c56b22}
+.btn{border:1px solid #ffdb8d;border-radius:12px;color:#24132b;font-weight:800;padding:13px 16px;background:linear-gradient(#ffe5a1,#d99a3f);box-shadow:inset 0 1px #fff7,0 4px 0 #70431d;transition:transform .12s}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #70431d}
+.btn.purple{background:linear-gradient(#a875ff,#6e32c5);color:white;border-color:#d5b5ff;box-shadow:inset 0 1px #fff5,0 4px 0 #3d1b68}
+.btn.ghost{background:#25172f;color:var(--text);border-color:var(--line);box-shadow:none}
+.mainbutton{width:100%;margin-top:13px;font-size:17px}
+.note{font-size:12px;color:var(--muted);line-height:1.5;margin:11px 2px 0}
+.doorstage{position:relative;overflow:hidden;border-radius:17px;padding:18px 12px;background:linear-gradient(180deg,#2a1a3b,#160f22);border:1px solid #76538a}
+.doorstage:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0,#9c54ff22,transparent 65%);pointer-events:none}
+.kep{font-size:56px;text-align:center;filter:drop-shadow(0 4px 8px #0007)}
+.speech{text-align:center;font-family:Georgia,serif;color:#ffe0a0;font-size:15px;margin:3px 0 14px}
+.doors{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;position:relative}
+.door{min-width:0;aspect-ratio:.75;border:1px solid #bb843c;border-radius:10px;background:linear-gradient(150deg,#68412b,#29172d 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:inset 0 0 0 2px #f5c36b15;overflow:hidden}
+.door .ico{font-size:clamp(23px,5vw,37px);filter:drop-shadow(0 0 8px #ffc45a55)}
+.door .dlabel{font-size:10px;text-align:center;line-height:1.1;padding:0 2px;color:#f9e5c1;overflow-wrap:anywhere}
+.door.closed{background:linear-gradient(145deg,#5b3579,#21152f 65%);border-color:#a780d6}
+.door.closed .ico{font-size:clamp(24px,5vw,36px)}
+.door.reveal{animation:pop .32s ease-out}
+@keyframes pop{0%{transform:scale(.75);opacity:.4}75%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.resultshead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:15px 0 10px}
+.resultshead h3{margin:0;color:var(--gold);font-family:Georgia,serif}
+.pill{border:1px solid #79558b;border-radius:99px;padding:5px 9px;font-size:12px;color:#e7d5f4}
+.lootlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.loot{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid #62456c;background:#1b1126;border-radius:12px;min-width:0}
+.loot .ico{font-size:27px}.loot b{display:block;font-size:13px}.loot small{color:var(--muted);font-size:11px}
+.empty{color:var(--muted);text-align:center;padding:18px 8px;font-size:13px}
+.historyitem{padding:12px 0;border-bottom:1px solid #4a3456}.historyitem:last-child{border-bottom:0}
+.histtop{display:flex;justify-content:space-between;gap:8px;font-size:13px}.histtop b{color:var(--gold)}.histdetail{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.45}
+.sectionrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.smallbtn{padding:8px 10px;font-size:12px;border-radius:9px}
+.rewardtable{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.rewardsetting{display:flex;align-items:center;gap:9px;border:1px solid #50365b;border-radius:11px;padding:10px;background:#1a1124}
+.rewardsetting .ico{font-size:24px}.rewardsetting div{min-width:0}.rewardsetting b{display:block;font-size:12px}.rewardsetting small{font-size:11px;color:var(--muted)}
+footer{text-align:center;color:#9c87a8;font-size:11px;margin-top:22px;line-height:1.5}
+.toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#f4c56b;color:#24132b;padding:11px 16px;border-radius:12px;font-weight:700;box-shadow:0 8px 25px #0007;transition:.25s;z-index:9;max-width:90vw;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:520px){.wrap{padding:12px 10px 30px}header{gap:9px}.brandmark{width:52px;height:52px;flex-basis:52px;font-size:31px;border-radius:14px}.topstats{min-width:78px;padding:8px}.topstats strong{font-size:19px}.subtitle{font-size:11px}.panel{padding:13px;border-radius:15px}.formgrid{grid-template-columns:1fr}.doors{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}.door{border-radius:8px}.door .dlabel{font-size:9px}.lootlist,.rewardtable{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brandmark">💀</div>
+  <div><h1>Гача от Кэпа</h1><div class="subtitle">КРУШИТЕЛИ ПОДЗЕМЕЛИЙ · ДВЕРИ УДАЧИ</div></div>
+  <div class="topstats"><small>Очки в этой сессии</small><strong id="totalSpent">0</strong></div>
+</header>
+
+<section class="panel">
+  <h2>🎲 Испытай удачу</h2>
+  <div class="formgrid">
+    <div><label for="nickname">Твой игровой ник</label><input id="nickname" maxlength="32" placeholder="Например, b3Happy" autocomplete="nickname"></div>
+    <div><label for="spend">Сколько Кеп-очков потратить?</label><input id="spend" type="number" min="1" max="1000" step="1" value="10" inputmode="numeric"></div>
+  </div>
+  <button class="btn purple mainbutton" id="spin">🚪 КРУТИТЬ — ОТКРЫТЬ ДВЕРИ</button>
+  <p class="note">Каждое очко открывает одну дверь. Награды случайные. Баланс условный: сайт записывает потраченные очки и результаты, но не проверяет настоящий игровой аккаунт.</p>
+</section>
+
+<section class="panel">
+  <div class="doorstage">
+    <div class="kep">👑💀</div>
+    <div class="speech" id="speech">«Ну что, друг? Попробуем удачу!»</div>
+    <div class="doors" id="doors">
+      <div class="door closed"><span class="ico">🚪</span><span class="dlabel">Закрыто</span></div>
+      <div class="door closed"><span class="ico">🚪</span><span class="dlabel">Закрыто</span></div>
+      <div class="door closed"><span class="ico">🚪</span><span class="dlabel">Закрыто</span></div>
+      <div class="door closed"><span class="ico">🚪</span><span class="dlabel">Закрыто</span></div>
+      <div class="door closed"><span class="ico">🚪</span><span class="dlabel">Закрыто</span></div>
+    </div>
+  </div>
+  <div class="resultshead"><h3>🏆 Ты получил</h3><span class="pill" id="resultCount">Пока пусто</span></div>
+  <div class="lootlist" id="lootlist"><div class="empty" style="grid-column:1/-1">Открой первую дверь — и узнаешь, что внутри.</div></div>
+  <div style="display:flex;gap:8px;margin-top:13px">
+    <button class="btn ghost smallbtn" id="copyResult" style="flex:1" disabled>📋 Скопировать результат</button>
+    <button class="btn ghost smallbtn" id="clearCurrent">Сбросить двери</button>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="sectionrow"><h2 style="margin-bottom:0">📜 История призывов</h2><button class="btn ghost smallbtn" id="clearHistory">Очистить</button></div>
+  <div class="note" style="margin-bottom:10px">История сохраняется в этом браузере на этом устройстве.</div>
+  <div id="history"><div class="empty">Здесь появятся твои призывы.</div></div>
+</section>
+
+<section class="panel">
+  <h2>🗝️ Возможные награды</h2>
+  <div class="note" style="margin:0 0 12px">Демонстрационные шансы. Все награды выбираются случайно; чем выше вес, тем чаще предмет выпадает. Шансы можно будет настроить в следующей версии.</div>
+  <div class="rewardtable" id="rewardtable"></div>
+</section>
+<footer>Фанатский прототип · неофициальный проект сообщества<br>Все очки и награды виртуальные и не связаны с реальным аккаунтом игры.</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const rewards = [
+ {name:"КБ", icon:"🟣", weight:24, amount:1},
+ {name:"Ящик банок", icon:"🧪", weight:20, amount:1},
+ {name:"ДД-сундук", icon:"🧰", weight:12, amount:1},
+ {name:"Зимний сундук", icon:"🎁", weight:9, amount:1},
+ {name:"Пустота", icon:"💎", weight:8, amount:1},
+ {name:"Золотой сундук", icon:"🟨", weight:8, amount:1},
+ {name:"Рунный свиток", icon:"📜", weight:7, amount:1},
+ {name:"Монеты", icon:"🪙", weight:6, amount:500},
+ {name:"Элитный сундук", icon:"👑", weight:4, amount:1},
+ {name:"Древняя руна", icon:"🔮", weight:2, amount:1}
+];
+let currentResults=[];
+let history=[];
+let totalSpent=0;
+const $=id=>document.getElementById(id);
+function safeLoad(){try{history=JSON.parse(localStorage.getItem("kepGachaHistory")||"[]");totalSpent=Number(localStorage.getItem("kepGachaSpent")||0)||0;}catch(e){history=[];totalSpent=0;}}
+function save(){try{localStorage.setItem("kepGachaHistory",JSON.stringify(history));localStorage.setItem("kepGachaSpent",String(totalSpent));}catch(e){toast("Браузер не разрешил сохранить историю.");}}
+function toast(msg){const el=$("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200);}
+function pickReward(){let sum=rewards.reduce((a,r)=>a+r.weight,0),n=Math.random()*sum;for(const r of rewards){n-=r.weight;if(n<0)return r;}return rewards[0];}
+function countRewards(arr){const map={};arr.forEach(r=>{const k=r.name; if(!map[k])map[k]={...r,count:0,total:0};map[k].count++;map[k].total+=r.amount;});return Object.values(map);}
+function renderLoot(arr){const el=$("lootlist");if(!arr.length){el.innerHTML='<div class="empty" style="grid-column:1/-1">Открой первую дверь — и узнаешь, что внутри.</div>';$("resultCount").textContent="Пока пусто";return;}
+const grouped=countRewards(arr);el.innerHTML=grouped.map(r=>`<div class="loot"><span class="ico">${r.icon}</span><div><b>${r.name} ×${r.count}</b><small>${r.name==="Монеты"?"Всего "+r.total+" монет":"Получено: "+r.count}</small></div></div>`).join("");$("resultCount").textContent=arr.length+" дверей";}
+function renderDoors(arr){const el=$("doors");const shown=arr.slice(0,100);el.innerHTML=shown.map((r,i)=>`<div class="door reveal" style="animation-delay:${Math.min(i%10,9)*18}ms"><span class="ico">${r.icon}</span><span class="dlabel">${r.name}${r.amount>1?" ×"+r.amount:""}</span></div>`).join("");if(arr.length>100){el.insertAdjacentHTML("beforeend",`<div class="door"><span class="ico">✨</span><span class="dlabel">Ещё ${arr.length-100} дверей открыто</span></div>`);} }
+function renderHistory(){const el=$("history");if(!history.length){el.innerHTML='<div class="empty">Здесь появятся твои призывы.</div>';return;}el.innerHTML=history.slice(0,15).map(h=>`<div class="historyitem"><div class="histtop"><b>${escapeHtml(h.nick)}</b><span>−${h.spent} Кеп-очков</span></div><div class="histdetail">${h.date} · ${h.count} дверей<br>${h.summary}</div></div>`).join("");}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function renderRewards(){const el=$("rewardtable");const total=rewards.reduce((a,r)=>a+r.weight,0);el.innerHTML=rewards.map(r=>`<div class="rewardsetting"><span class="ico">${r.icon}</span><div><b>${r.name}</b><small>Шанс около ${(r.weight/total*100).toFixed(1)}%</small></div></div>`).join("");}
+function renderSpent(){$("totalSpent").textContent=totalSpent.toLocaleString("ru-RU");}
+function makeSummary(arr){return countRewards(arr).map(r=>`${r.name} ×${r.count}${r.name==="Монеты"?" ("+r.total+")":""}`).join(", ");}
+$("spin").addEventListener("click",()=>{
+ const nick=$("nickname").value.trim();const spent=Number($("spend").value);
+ if(!nick){toast("Сначала введи игровой ник!");$("nickname").focus();return;}
+ if(!Number.isInteger(spent)||spent<1||spent>1000){toast("Введи число от 1 до 1000.");return;}
+ const btn=$("spin");btn.disabled=true;btn.textContent="✨ Кэп открывает двери...";
+ setTimeout(()=>{
+   currentResults=Array.from({length:spent},pickReward);
+   totalSpent+=spent;
+   renderDoors(currentResults);renderLoot(currentResults);renderSpent();
+   $("speech").textContent=`«${nick}, вот что тебе досталось!»`;
+   const h={nick,spent,count:spent,date:new Date().toLocaleString("ru-RU"),summary:makeSummary(currentResults)};
+   history.unshift(h);history=history.slice(0,100);save();renderHistory();
+   $("copyResult").disabled=false;
+   btn.disabled=false;btn.innerHTML="🚪 КРУТИТЬ — ОТКРЫТЬ ДВЕРИ";
+   toast(`Открыто дверей: ${spent}!`);
+ },180);
+});
+$("clearCurrent").addEventListener("click",()=>{currentResults=[];$("doors").innerHTML=Array.from({length:5},()=>'<div class="door closed"><span class="ico">🚪</span><span class="dlabel">Закрыто</span></div>').join("");$("speech").textContent="«Ну что, друг? Попробуем удачу!»";renderLoot([]);$("copyResult").disabled=true;});
+$("copyResult").addEventListener("click",async()=>{if(!currentResults.length)return;const text=`Гача от Кэпа\nНик: ${$("nickname").value.trim()}\nПотрачено: ${currentResults.length} Кеп-очков\nНаграды: ${makeSummary(currentResults)}`;try{await navigator.clipboard.writeText(text);toast("Результат скопирован!");}catch(e){const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();toast("Результат скопирован!");}});
+$("clearHistory").addEventListener("click",()=>{if(confirm("Удалить историю призывов на этом устройстве?")){history=[];totalSpent=0;save();renderHistory();renderSpent();toast("История очищена.");}});
+safeLoad();renderSpent();renderHistory();renderRewards();
+</script>
+</body>
+</html>
